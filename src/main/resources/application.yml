@@ -37,3 +37,11 @@ file:
 
 ip:
   address: "3.38.33.154"
+---
+
+spring:
+  config.activate.on-profile: heroku
+  datasource:
+    url: ${JAWSDB_URL}
+  jpa.hibernate.ddl-auto: create
+  sql.init.mode: always
