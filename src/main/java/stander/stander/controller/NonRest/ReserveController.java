@@ -131,7 +131,7 @@ public class ReserveController {
                 return "reserve/price";
             }
 
-            String url = "http://"+ ip +":8080/open/" + member.getId();
+            String url = "http://"+ ip +"/open/" + member.getId();
             //예약을 완료했을 때 IOT에서 이용할 URL 주소를 member.qr 컬럼에 저장한다.
             String file_path = fileDir + member.getId() + "/";
             String file_name = "QRCODE.jpg";

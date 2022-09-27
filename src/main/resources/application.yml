@@ -37,7 +37,7 @@ file:
   dir: ./src/main/resources/static/img/
 
 ip:
-  address: "3.38.33.154"
+  address: "stander-cafe.herokuapp.com"
 ---
 
 spring:

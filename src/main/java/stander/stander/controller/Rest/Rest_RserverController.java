@@ -91,7 +91,7 @@ public class Rest_RserverController {
                 map1.put("seat", null);
                 return map1;
             }
-            String url = "http://"+ ip +":8080/open/" + member.getId();   //모든 조건이 충족했다면 예약을 진행하고 qr코드를 발행한다.
+            String url = "http://"+ ip +"/open/" + member.getId();   //모든 조건이 충족했다면 예약을 진행하고 qr코드를 발행한다.
             member.setQr(url);
             Seat seat = new Seat();
             seat.setMember(member);
