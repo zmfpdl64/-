@@ -34,7 +34,7 @@ server:
       timeout: 1800
 
 file:
-  dir: ./src/main/resources/static/img/
+  dir: /app/
 
 ip:
   address: "stander-cafe.herokuapp.com"
