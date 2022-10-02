@@ -24,13 +24,16 @@
         background-color: #87ceeb;
       }
 </style>
+    <br><br><br>
+    <br><br><br>
+
     <div class="row">
         <div class="col-2">
-            <br><br><hr>
+            <br><br><br>
 
         </div>
         <div class="col-1">
-            <br><br><hr>
+            <br><br><br>
 
             <br><br>
 <!--            <div  class="div2" th:text="${sits[3].getId()}">4</div> <br><br>-->
@@ -51,7 +54,7 @@
 
         </div>
         <div class="col-7">
-            <br><br><hr>
+            <br><br><br>
 
             <button th:if="${sit5}" th:utext="|${sit5}|" style=" margin-left: 20px" class="btn1 5">5</button>
             <button th:unless="${sit5}"  style=" margin-left: 20px" class="btn1 5">5</button>
@@ -90,12 +93,12 @@
 
             <br><br><br><br><br><br>
             <button style="float:right" class="btn btn-primary sub">예약하기</button>
-<!--            <a style="float:right" href="/reserve/clear" class="btn btn-primary">전체 초기화</a>-->
-<!--            <a style="float:right" th:if="${member}" th:href="|/reserve/clear/${member.getId()}|" class="btn btn-primary">초기화</a>-->
+<!--            <a style="float:right" bref="/reserve/clear" class="btn btn-primary">전체 초기화</a>-->
+<!--            <a style="float:right" th:if="${member}" th:bref="|/reserve/clear/${member.getId()}|" class="btn btn-primary">초기화</a>-->
 
         </div>
         <div class="col-1">
-            <br><br><hr>
+            <br><br><br>
 
             <br><br>
             <button th:if="${sit10}" th:utext="|${sit10}|"  class="btn1 10" >10</button>
