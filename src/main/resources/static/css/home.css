@@ -1,0 +1,10 @@
+.container {
+    width: 300vw;
+}
+.inner {
+    width: 100vw;
+    float: left;
+}
+.inner img{
+    width:100%
+}

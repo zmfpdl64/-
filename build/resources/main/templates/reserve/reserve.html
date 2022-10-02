@@ -24,11 +24,13 @@
       }
 </style>
     <div class="row">
-        <br><br><hr>
         <div class="col-2">
-            <h1>예약 페이지</h1>
+            <br><br><hr>
+
         </div>
         <div class="col-1">
+            <br><br><hr>
+
             <br><br>
 <!--            <div  class="div2" th:text="${sits[3].getId()}">4</div> <br><br>-->
 <!--            <div  class="div2" th:text="${sits[3].getId()}">4</div> <br><br>-->
@@ -48,6 +50,8 @@
 
         </div>
         <div class="col-7">
+            <br><br><hr>
+
             <button th:if="${sit5}" th:utext="|${sit5}|" style=" margin-left: 20px" class="btn1 5">5</button>
             <button th:unless="${sit5}"  style=" margin-left: 20px" class="btn1 5">5</button>
 
@@ -90,6 +94,8 @@
 
         </div>
         <div class="col-1">
+            <br><br><hr>
+
             <br><br>
             <button th:if="${sit10}" th:utext="|${sit10}|"  class="btn1 10" >10</button>
             <button th:unless="${sit10}"   class="btn1 10" >10</button> <br><br>
@@ -130,7 +136,7 @@
       function postValue(event) {
       for(var i = 0; i < div2.length; i++) {
       if(div2[i].classList[2] === "clicked") {
-            location.href="/reserve/price?num="+div2[i].classList[1];    <!--//예약하기 버튼을 누르면 url로 이동한다.-->
+            location.href="/reserve/price?num="+div2[i].classList[1];    /*<!--//예약하기 버튼을 누르면 url로 이동한다.-->*/
       }}}
 
       function handleClick(event) {

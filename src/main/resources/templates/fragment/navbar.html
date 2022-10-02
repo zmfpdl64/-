@@ -3,7 +3,7 @@
 
       lang="ko">
 
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark" >
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"  >
 
 <div class="container-fluid ">
     <a href="/">    <img src="/img/icon.png" style="height:60px; width:60px; margin-right:10px">
@@ -18,26 +18,13 @@
                 <a class="nav-link active" aria-current="page" href="/">홈페이지</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/about_cafe">카페 소개</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/map">찾아오기</a>
+                <a class="nav-link" href="/#map">찾아오기</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/reserve">예약하기</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/reserve/price">결제하기</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown link
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
             </li>
         </ul>
     </div>
