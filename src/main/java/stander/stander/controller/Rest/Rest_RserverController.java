@@ -74,9 +74,10 @@ public class Rest_RserverController {
         try{
             Map<String, Object> map1 = new HashMap<>();
             long id = Long.parseLong(map.get("id"));
+            long seat_num = Long.parseLong(map.get("seat_num"));
             Member member = memberService.findById(id);
 
-            if (seatService.check_sit(id)) {    //누군가 앉아있다면 오류 1번 발생
+            if (seatService.check_sit(seat_num)) {    //누군가 앉아있다면 오류 1번 발생
                 map1.put("status", "1");
                 map1.put("seat", null);
                 return map1;
