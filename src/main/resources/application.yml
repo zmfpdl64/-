@@ -44,5 +44,5 @@ spring:
   config.activate.on-profile: heroku
   datasource:
     url: ${JAWSDB_MARIA_URL}
-  jpa.hibernate.ddl-auto: create
+  jpa.hibernate.ddl-auto: update
   sql.init.mode: always
