@@ -4,7 +4,6 @@ spring:
     url: jdbc:mariadb://localhost:3307/stander
     username: woojin
     password: 1234
-    driver-class-name: org.mariadb.jdbc.Driver
   devtools:
     livereload:
       enabled: true
@@ -34,15 +33,17 @@ server:
       timeout: 1800
 
 file:
-  dir: /app/
+  dir: D:\images/
+#  dir: /app/
 
 ip:
-  address: "stander-cafe.herokuapp.com"
+  address: "localhost:8080"
+#  address: "stander-cafe.herokuapp.com"
 ---
 
 spring:
   config.activate.on-profile: heroku
   datasource:
     url: ${JAWSDB_MARIA_URL}
-  jpa.hibernate.ddl-auto: create
+  jpa.hibernate.ddl-auto: update
   sql.init.mode: always
