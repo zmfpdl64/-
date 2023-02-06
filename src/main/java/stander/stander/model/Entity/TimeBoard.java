@@ -1,14 +1,11 @@
 package stander.stander.model.Entity;
 
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 @Entity
 @RequiredArgsConstructor
@@ -20,11 +17,13 @@ public class TimeBoard {
 
     @ToString.Exclude
     @OneToMany
+    @Getter
+    @Setter
     @Column(name = "times")
     private Map<Integer, Member> times= makeTimes();
 
     @Column(name = "date")
-    LocalDateTime date = LocalDateTime.now();
+    LocalDateTime date;
 
     private Map<Integer, Member> makeTimes() {
         Map<Integer, Member> times= new HashMap<>();
@@ -32,5 +31,9 @@ public class TimeBoard {
             times.put(i, null);
         }
         return times;
+    }
+
+    public TimeBoard(LocalDateTime date) {
+        this.date = date;
     }
 }

@@ -8,7 +8,10 @@ import stander.stander.model.Entity.Member;
 import stander.stander.model.Entity.Seat;
 import stander.stander.service.MemberService;
 import stander.stander.service.SeatService;
+import stander.stander.repository.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +24,8 @@ public class TimeDiminish {
     private SeatService seatService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private ReserveRepository reserveRepository;
 
     @Scheduled(cron = "0/1 * * * * *")
     public void timeDiminish() {
@@ -46,6 +51,13 @@ public class TimeDiminish {
 
             }
         }
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // 초, 분, 시, 일, 달, 요일
+    public void createReserveTable() {
+        List<LocalDateTime> localDateTimes = new ArrayList<>();
+        LocalDateTime localDateTime = LocalDateTime.now().plusDays(1);
+        reserveRepository.makeTimeBoard(localDateTime);
     }
 
 }
