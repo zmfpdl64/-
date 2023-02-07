@@ -20,9 +20,11 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
@@ -76,12 +78,19 @@ class ReserveRepositoryTest {
         LocalDateTime localDateTime = LocalDateTime.now();
         Member member = (Member)jpaRepository.findById(1L);
 
+
         //When
         reserveRepository.reserveTime(member, localDateTime, 4, 6);
         TimeBoard updateBoard = reserveRepository.getTimeBoard(localDateTime);
+        Map<Integer, Member> times = updateBoard.getTimes();
+
 
         //Then
         assertThat(updateBoard.getTimes().get(4).getName()).isEqualTo(member.getName());
+        for(int i = 4; i <= 6; i++)
+        {
+            assertThat(times.get(i).getUsername()).isEqualTo(member.getUsername());
+        }
     }
 
     @DisplayName("특정 날짜 타임테이블 조회하기")
@@ -96,8 +105,24 @@ class ReserveRepositoryTest {
         assertThat(getTimeBoard).isEqualTo(getTimeBoard);
     }
 
+    @DisplayName("예약 취소기능 테스트")
     @Test
     void cancleTime() {
+
+        //Given
+        Member member = jpaRepository.findById(1L);
+        LocalDateTime time = LocalDateTime.now().plusDays(1);
+        reserveRepository.reserveTime(member, time, 12, 15);
+
+        //When
+        reserveRepository.cancleTime(time, member);
+        TimeBoard timeBoard = reserveRepository.getTimeBoard(time);
+        Map<Integer, Member> times = timeBoard.getTimes();
+
+        //Then
+        for(int i = 0; i < 24; i++) {
+            assertNull(times.get(i));
+        }
     }
 
     @DisplayName("모든 타임테이블 불러오기")

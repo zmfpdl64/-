@@ -15,3 +15,5 @@ set date = date_format('2023-02-07 10:20:50', '%Y-%m-%d %h:%m:%s')
 where id = 1;
 
 delete timeboard from timeboard where id = 1;
+delete member from member where username = '이우진';
+delete seat from seat where id > 10;

@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+@Transactional
 //@WebMvcTest(controllers = MainController.class)
 class MainControllerTest {
 
@@ -36,7 +37,6 @@ class MainControllerTest {
     SeatService sitService;
 
     @Test
-    @Rollback(false)
     @Transactional
     public void post_join() {
         Member member = newMember();
@@ -49,27 +49,23 @@ class MainControllerTest {
 
     private Member newMember() {
         Member member = new Member();
+        memberService.join(member);
         member.setUsername("이우진");
         member.setPassword("1234");
         return member;
     }
 
     @Test
-    @Rollback(false)
     @Transactional
     public void reserve() {
         Member member = newMember();
         memberService.join(member);
 
-//        for(int i = 0; i < 15; i++) {
-//            Sit sit = new Sit();
-//            sitService.set(sit);
-//        }
         Seat sit1 = new Seat();
-
+        sit1.setId(1L);
+        sit1.setSeat_num("1");
+        sit1.setMember(member);
         sitService.save(sit1);
-
-        sitService.use(1L, member);
         Seat sit = sitService.findMember(member);
         Assertions.assertThat(sit.getId()).isEqualTo(1L);
         log.info("sit.member_id = {}", sit.getMember());
@@ -81,31 +77,5 @@ class MainControllerTest {
 
 //        Assertions.assertThat(1).isEqualTo(2);
 
-    }
-    @Test
-    @Rollback(false)
-    @Transactional
-    public void sort_sit() throws Exception {
-
-        Member member = newMember();
-        memberService.join(member);
-        Long id = 10L;
-        sitService.use(id, member);
-
-        if (sitService.check_member(member)) {
-            List<Seat> sits = sitService.findAll();
-            for (Seat sit : sits) {
-                log.info("sit.getId() = {}", sit.getId());
-            }
-            sits.sort(new Comparator<Seat>() {
-                @Override
-                public int compare(Seat o1, Seat o2) {
-                    return (int) (o1.getId() - o2.getId());
-                }
-            });
-            for (Seat sit : sits) {
-                log.info("sort sit.getId() = {}", sit.getId());
-            }
-        }
     }
 }

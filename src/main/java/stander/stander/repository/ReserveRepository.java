@@ -64,8 +64,15 @@ public class ReserveRepository implements ReserveInterface{
     }
 
     @Override
-    public void cancleTime() {
-
+    public void cancleTime(LocalDateTime localDateTime, Member member) {
+        TimeBoard timeBoard = getTimeBoard(localDateTime);
+        Map<Integer, Member> times = timeBoard.getTimes();
+        for(int i = 0; i < 24; i++){
+            Member findmember = times.get(i);
+            if ( findmember != null && times.get(i).getUsername().equals(member.getUsername())){
+                times.put(i, null);
+            }
+        }
     }
 
     public List<TimeBoard> allTimeBoard() {

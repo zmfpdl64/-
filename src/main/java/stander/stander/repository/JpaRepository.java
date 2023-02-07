@@ -60,7 +60,7 @@ public class JpaRepository implements stander.stander.repository.Repository {
 
     }
 
-    public List<Member> findAll(String username) {
+    public List<Member> findAll() {
         List<Member> result = em.createQuery("select m from Member m", Member.class).getResultList();
 
         return result;

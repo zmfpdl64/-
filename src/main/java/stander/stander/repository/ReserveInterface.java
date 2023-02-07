@@ -16,5 +16,5 @@ public interface ReserveInterface {
 
     void reserveTime(Member member, LocalDateTime dateTime, int start, int end);
 
-    public void cancleTime();
+    public void cancleTime(LocalDateTime localDateTime, Member member);
 }
