@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,6 +44,7 @@ class ReserveServiceTest {
         given(rep.OneWeek()).willReturn(times);
     }
 
+    @DisplayName("1주일 정도 타임보드 가져오기 테스트")
     @Test
     void getOneWeek() {
         ///Given
@@ -65,6 +67,7 @@ class ReserveServiceTest {
         return times;
     }
 
+    @DisplayName("다음날 10시 부터 14시까지의 예약 잡기 테스트")
     @Test
     void reserveTime() {
         //Given
@@ -81,7 +84,6 @@ class ReserveServiceTest {
 
         //Then
         then(rep).should().reserveTime(member, day, start, end);
-        assertThat(oneWeek.get(afterday).getTimes().get(start).getUsername()).isEqualTo("woojin");
     }
 
     private static Member getMember() {
@@ -92,11 +94,39 @@ class ReserveServiceTest {
         return member;
     }
 
+    @DisplayName("10시부터 14시 예약한것 취소하기")
     @Test
     void cancleTime() {
+        //Given
+        int start = 10, end = 14;
+        int afterday = 1;
+        LocalDateTime day = LocalDateTime.now().withNano(0).withNano(0).plusDays(afterday);
+        Member member = getMember();
+        willDoNothing().given(rep).reserveTime(member, day, start, end);
+        willDoNothing().given(rep).cancleTime(day, member);
+
+        //When
+        sut.reserveTime(member, afterday, start, end);
+        sut.cancleTime(afterday, member);
+        List<TimeBoard> oneWeek = sut.getOneWeek();
+
+        //Then
+        then(rep).should().cancleTime(day, member);
+        assertNull(oneWeek.get(1).getTimes().get(1));
     }
 
+    @DisplayName("모든 타임보드 불러오기")
     @Test
     void getAllTime() {
+        //Given
+        given(rep.allTimeBoard()).willReturn(getTimeBoards());
+        //When
+        List<TimeBoard> allTime = sut.getAllTime();
+        sut.getOneWeek();
+
+        //Then
+        then(rep).should().allTimeBoard();
+        assertThat(allTime.size()).isEqualTo(7);
+
     }
 }

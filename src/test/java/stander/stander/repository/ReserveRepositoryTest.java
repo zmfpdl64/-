@@ -75,7 +75,7 @@ class ReserveRepositoryTest {
     @Test
     void reserveTime() {
         //Given
-        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0).plusDays(1);
         Member member = (Member)jpaRepository.findById(1L);
 
 

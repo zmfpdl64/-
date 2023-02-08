@@ -40,7 +40,7 @@ public class ReserveRepository implements ReserveInterface{
     public TimeBoard getTimeBoard(LocalDateTime localDateTime){
         try {
 
-            return em.createQuery("select m from TimeBoard m where  m.date < :end and m.date > :start", TimeBoard.class)
+            return em.createQuery("select m from TimeBoard m where  m.date < :end and m.date > :start order by m.date asc", TimeBoard.class)
                     .setParameter("start", localDateTime.minusMinutes(10))
                     .setParameter("end", localDateTime.plusDays(1))
                     .getSingleResult();
