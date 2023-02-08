@@ -43,7 +43,7 @@ class ReserveRepositoryTest {
     @BeforeEach
     public void before(){
         for(int i = 1; i <= 7; i++) {
-            reserveRepository.makeTimeBoard(LocalDateTime.now().plusDays(i));
+            reserveRepository.makeTimeBoard(LocalDateTime.now().withNano(0).plusDays(i));
         }
     }
 
@@ -65,7 +65,7 @@ class ReserveRepositoryTest {
         //Given
         int size = reserveRepository.allTimeBoard().size();
         //When
-        reserveRepository.makeTimeBoard(LocalDateTime.now());
+        reserveRepository.makeTimeBoard(LocalDateTime.now().withNano(0));
         int update = reserveRepository.allTimeBoard().size();
         //Then
         assertThat(size+1).isEqualTo(update);
@@ -75,7 +75,7 @@ class ReserveRepositoryTest {
     @Test
     void reserveTime() {
         //Given
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
         Member member = (Member)jpaRepository.findById(1L);
 
 
@@ -97,7 +97,7 @@ class ReserveRepositoryTest {
     @Test
     void getTimeBoard() {
         //Given
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
         //When
         TimeBoard getTimeBoard = reserveRepository.getTimeBoard(localDateTime);
 
@@ -111,7 +111,7 @@ class ReserveRepositoryTest {
 
         //Given
         Member member = jpaRepository.findById(1L);
-        LocalDateTime time = LocalDateTime.now().plusDays(1);
+        LocalDateTime time = LocalDateTime.now().withNano(0).plusDays(1);
         reserveRepository.reserveTime(member, time, 12, 15);
 
         //When

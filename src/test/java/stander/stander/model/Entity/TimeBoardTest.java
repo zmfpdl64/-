@@ -23,7 +23,7 @@ class TimeBoardTest {
     public void GenerateTimeBoard() {
         //Given
         Calendar calendar = Calendar.getInstance();
-        LocalDateTime date= LocalDateTime.now().plusDays(1);
+        LocalDateTime date= LocalDateTime.now().withNano(0).plusDays(1);
         date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
         date.plusYears(1);
 

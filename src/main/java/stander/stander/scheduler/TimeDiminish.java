@@ -56,7 +56,7 @@ public class TimeDiminish {
     @Scheduled(cron = "0 0 0 * * ?") // 초, 분, 시, 일, 달, 요일
     public void createReserveTable() {
         List<LocalDateTime> localDateTimes = new ArrayList<>();
-        LocalDateTime localDateTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0).plusDays(1);
         reserveRepository.makeTimeBoard(localDateTime);
     }
 

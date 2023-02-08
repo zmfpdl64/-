@@ -34,14 +34,14 @@ public class ReserveRepository implements ReserveInterface{
     public void makeTimeBoard(LocalDateTime localDateTime) {
         TimeBoard timeBoard = new TimeBoard(localDateTime);
         em.persist(timeBoard);
-        em.flush();
+//        em.flush();
     }
 
     public TimeBoard getTimeBoard(LocalDateTime localDateTime){
         try {
 
             return em.createQuery("select m from TimeBoard m where  m.date < :end and m.date > :start", TimeBoard.class)
-                    .setParameter("start", localDateTime)
+                    .setParameter("start", localDateTime.minusMinutes(10))
                     .setParameter("end", localDateTime.plusDays(1))
                     .getSingleResult();
         }

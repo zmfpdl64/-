@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import stander.stander.repository.JpaRepository;
 import stander.stander.repository.JpaSitRepository;
+import stander.stander.repository.*;
 
 import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;

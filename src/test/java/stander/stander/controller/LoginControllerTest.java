@@ -28,9 +28,6 @@ class LoginControllerTest {
     Logger log = LoggerFactory.getLogger(LoginControllerTest.class);
 
     @Autowired
-    private MockMvc mvc;
-
-    @Autowired
     private MemberService memberService;
     @Autowired
     private SeatService seatService;
