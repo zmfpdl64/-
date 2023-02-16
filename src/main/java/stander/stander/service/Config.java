@@ -41,6 +41,11 @@ public class Config implements WebMvcConfigurer {
         return new JpaSitRepository(em);
     }
 
+//    @Bean
+//    public ReserveRepository reserveRepository() throws SQLException{
+//        return new ReserveRepository(em);
+//    }
+
     @Bean
     public MemberService memberService() throws SQLException {
         return new MemberService(repository());
@@ -51,6 +56,10 @@ public class Config implements WebMvcConfigurer {
         return new SeatService(sitrepository());
     }
 
+//    @Bean
+//    public ReserveService reserveService() throws SQLException {
+//        return new ReserveService(reserveRepository());
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

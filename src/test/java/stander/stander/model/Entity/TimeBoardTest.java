@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("TimeBoard 도메인 테스트")
@@ -26,16 +27,14 @@ class TimeBoardTest {
         LocalDateTime date= LocalDateTime.now().withNano(0).plusDays(1);
         date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
         date.plusYears(1);
-
-
         //When
         TimeBoard board = new TimeBoard(date);
 
         //Then
         System.out.println(board.date);
         System.out.println(calendar.get(Calendar.YEAR) + "년 "+ calendar.get(Calendar.MONTH) + "월 "+ calendar.get(Calendar.DATE)+"일" );
-
-
+        System.out.println(board.getTimes().size());
+        assertThat(board.getTimes().size()).isEqualTo(24);
     }
 
 }

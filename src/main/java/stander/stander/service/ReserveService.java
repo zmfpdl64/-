@@ -1,4 +1,6 @@
 package stander.stander.service;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import stander.stander.model.Entity.Member;
 import stander.stander.model.Entity.TimeBoard;
 import stander.stander.repository.*;
@@ -11,10 +13,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional
+@AllArgsConstructor
 @Service
 public class ReserveService {
 
-    private ReserveRepository reserveRepository;
+    @Autowired private ReserveRepository reserveRepository;
 
     public List<TimeBoard> getOneWeek(){
         return reserveRepository.OneWeek();

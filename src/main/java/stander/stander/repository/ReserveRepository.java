@@ -23,7 +23,7 @@ public class ReserveRepository implements ReserveInterface{
 
     @Override
     public List<TimeBoard> OneWeek() {
-        List<TimeBoard> resultList = em.createQuery("select m from TimeBoard m order by m.date desc", TimeBoard.class)
+        List<TimeBoard> resultList = em.createQuery("select m from TimeBoard m order by m.date asc", TimeBoard.class)
                 .setMaxResults(7)
                 .getResultList();
         return resultList;
@@ -40,10 +40,10 @@ public class ReserveRepository implements ReserveInterface{
     public TimeBoard getTimeBoard(LocalDateTime localDateTime){
         try {
 
-            return em.createQuery("select m from TimeBoard m where  m.date < :end and m.date > :start order by m.date asc", TimeBoard.class)
+            return em.createQuery("select m from TimeBoard m where m.date > :start order by m.date asc", TimeBoard.class)
                     .setParameter("start", localDateTime.minusMinutes(10))
-                    .setParameter("end", localDateTime.plusDays(1))
-                    .getSingleResult();
+                    .getResultList()
+                    .get(0);
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
@@ -56,11 +56,9 @@ public class ReserveRepository implements ReserveInterface{
         TimeBoard timeBoard = getTimeBoard(dateTime);
         Map<Integer, Member> times = timeBoard.getTimes();
 
-        for(int i = start; i <= end; i++){
+        for(int i = start; i < end; i++){
             times.put( i, member);
         }
-
-
     }
 
     @Override

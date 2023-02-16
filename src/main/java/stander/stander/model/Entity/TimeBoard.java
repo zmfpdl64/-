@@ -12,16 +12,18 @@ import java.util.*;
 @Table(name = "timeboard")
 public class TimeBoard {
     @Id
+    @Column(name="timeboard_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ToString.Exclude
-    @OneToMany
+    @OneToMany()
     @Getter
     @Setter
-    @Column(name = "times")
-    private Map<Integer, Member> times= makeTimes();
+    @JoinColumn(name="timeboard_id")
+    private Map<Integer, Member> times;
 
+    @Getter
     @Column(name = "date")
     LocalDateTime date;
 
@@ -35,5 +37,6 @@ public class TimeBoard {
 
     public TimeBoard(LocalDateTime date) {
         this.date = date;
+        this.times = makeTimes();
     }
 }

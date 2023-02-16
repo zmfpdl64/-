@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+      lang="ko">
+
+<div layout:fragment="content">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-2">
+            <h1>좌석 타임 테이블</h1>
+        </div>
+        <div class="col-8">
+
+        <table border = "1"
+        width ="50%"
+        height = "200"
+        cellspacing=="5">
+            <caption>좌석 예약</caption>
+            <thead>
+                <tr>
+                    <th th:text="날짜"></th>
+                    <th th:each="time : ${times}">
+                        <a  th:text="${time}"></a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="oneday : ${oneWeek.getTimes()}">
+                    <td th:text="${oneday.getLocalDateTime()}"></td>
+                    <td class="timetables" th:each="member : ${oneday.getMembers()}">
+                        <p class="timetable" th:if="${member}==null">&nbsp&nbsp</p>
+                        <p th:unless="${member}==null" th:text="${member.getUsername}"
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+  <h1>hello world</h1>
+    <a role="button" style="float:right" class="submit btn btn-primary" th:text="예약하기"></a>
+        </div>
+        <div class="col-8">
+
+        </div>
+    </div>
+
+    <style>
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+        }
+        .clicked {
+            background-color: skyblue;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+    </style>
+    <script th:inline="javascript">
+
+        var oneWeek = document.getElementsByClassName("timetables")
+
+        function init(){
+            // for(let i = 0; i < oneWeek.length; i++){
+            //     const oneDay = oneWeek[i].getElementsByClassName("timetable");
+            //     for(let j = 0; j < oneDay.length; j++){
+            //         oneDay.item(j).addEventListener("click", handleClick)
+            //     }
+            // }
+            for(let i = 0; i < oneWeek.length; i++){
+                const oneDay = oneWeek[i].getElementsByClassName("timetable");
+                for(let j = 0; j < oneDay.length; j++){
+                    oneDay.item(j).addEventListener("click", handleClick)
+                }
+            }
+        }
+        init()
+
+        function handleClick(event) {
+            console.log(event.target.classList)
+            // console.log(event.target.parentNode)
+            console.log(event.target)
+            if(event.target.parentNode.classList.contains("clicked")){
+                event.target.parentNode.classList.remove("clicked")
+            }else{
+                event.target.parentNode.classList.add("clicked")
+            }
+            // if(event.target.classList.contains("clicked")){
+            //     event.target.classList.remove("clicked")
+            // }else{
+            //     event.target.classList.add("clicked")
+            // }
+        }
+
+    </script>
+</div>
+
+</html>

@@ -29,27 +29,32 @@ public class TimeDiminish {
 
     @Scheduled(cron = "0/1 * * * * *")
     public void timeDiminish() {
-        List<Seat> useSeat = seatService.findUseSeat();
-        if(!Objects.isNull(useSeat)) {
-            for (Seat seat : useSeat) {
-                int use_time = ((int) new Date().getTime() - (int) seat.getCheck_in().getTime()) / 1000;
+        try {
+            List<Seat> useSeat = seatService.findUseSeat();
+            if (!Objects.isNull(useSeat)) {
+                for (Seat seat : useSeat) {
+                    int use_time = ((int) new Date().getTime() - (int) seat.getCheck_in().getTime()) / 1000;
 //                log.info("use_time = {}", use_time);
 
-                int time = seat.getMember().getTime() - use_time;
+                    int time = seat.getMember().getTime() - use_time;
 //                log.info("time = {}", time);
 
-                if (seat.getMember().getTime() == 0) {
-                    Member member = seat.getMember();
-                    member.setQr(null);
-                    seatService.clearOne(member);
-                    memberService.modify(member);
+                    if (seat.getMember().getTime() == 0) {
+                        Member member = seat.getMember();
+                        member.setQr(null);
+                        seatService.clearOne(member);
+                        memberService.modify(member);
+                        seat.setPresent_use(false);
+                        seat.setCheck_out(new Date());
+                    } else {
+                        seat.getMember().setTime(seat.getMember().getTime() - 1);
+                        memberService.modify(seat.getMember());
+                    }
 
-                } else {
-                    seat.getMember().setTime(seat.getMember().getTime() - 1);
-                    memberService.modify(seat.getMember());
                 }
-
             }
+        }catch(NullPointerException e){
+            log.info(e.getMessage());
         }
     }
 
