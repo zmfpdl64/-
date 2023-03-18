@@ -1,10 +1,8 @@
 spring:
   datasource:
-#    url: jdbc:mariadb://3.38.33.154:3306/jpastander
-    url: jdbc:mariadb://localhost:3307/stander
-    username: woojin
-    password: 1234
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${LOCAL_DB}
+    username: ${DB_NAME}
+    password: ${DB_PSWD}
   devtools:
     livereload:
       enabled: true
@@ -12,15 +10,15 @@ spring:
     cache: false
   thymeleaf:
     cache: false
-#  boot:
-#    admin:
-#      mail:
-#        from: ${spring.mail.username}
+  boot:
+    admin:
+      mail:
+        from: ${spring.mail.username}
   mail:
     host: smtp.naver.com
     port: 465
-    username: woojintestid@naver.com
-    password: "!@woojintest"
+    username: ${TESTID}
+    password: ${TESTPASSWORD}
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
@@ -34,15 +32,17 @@ server:
       timeout: 1800
 
 file:
-  dir: /app/
+  dir: D:\images/
+#  dir: /app/
 
 ip:
-  address: "stander-cafe.herokuapp.com"
+  address: "localhost:8080"
+#  address: "stander-cafe.herokuapp.com"
 ---
 
 spring:
   config.activate.on-profile: heroku
   datasource:
     url: ${JAWSDB_MARIA_URL}
-  jpa.hibernate.ddl-auto: create
+  jpa.hibernate.ddl-auto: update
   sql.init.mode: always

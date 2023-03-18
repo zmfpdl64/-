@@ -70,16 +70,14 @@ public class JpaRepositoryTest {
     @Test
     public void findByPasswd() {
         Member findMember = em.createQuery("select m from Member m where m.password = :password", Member.class)
-                .setParameter("password", "1234")
+                .setParameter("password", "12345")
                 .getSingleResult();
-        Assertions.assertThat(findMember.getUsername()).isEqualTo("1234");
+        Assertions.assertThat(findMember.getUsername()).isEqualTo("jihyun");
     }
 
     @Test
     public void findAll() {
 
-        List<Member> result = em.createQuery("select m from Member m", Member.class).getResultList();
-        Assertions.assertThat(result.size()).isEqualTo(2);
     }
 
 

@@ -20,12 +20,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = LoginControllerTest.class)
+//@WebMvcTest(ntrollers = LoginControllerTest.class)
+@SpringBootTest
+@Transactional
 class LoginControllerTest {
 
     Logger log = LoggerFactory.getLogger(LoginControllerTest.class);
-    @Autowired
-    private MockMvc mvc;
 
     @Autowired
     private MemberService memberService;

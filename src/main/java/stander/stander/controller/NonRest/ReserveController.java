@@ -7,18 +7,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import stander.stander.dto.OneWeekDto;
+import stander.stander.dto.TimeBoardDto;
 import stander.stander.model.Entity.Member;
 import stander.stander.model.Entity.Seat;
+import stander.stander.model.Entity.TimeBoard;
 import stander.stander.qr.QRUtil;
 import stander.stander.service.MemberService;
+import stander.stander.service.ReserveService;
 import stander.stander.service.SeatService;
 import stander.stander.web.SessionConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.IntStream;
 
 @Controller
 @Slf4j
@@ -28,6 +32,8 @@ public class ReserveController {
     private MemberService memberService;
     @Autowired
     private SeatService sitService;
+    @Autowired
+    private ReserveService reserveService;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -38,7 +44,7 @@ public class ReserveController {
     @GetMapping //예약한 사람들을 확인할 수 있는 URL이다.
     public String reserve(Model model, HttpServletRequest request) {
 
-        HttpSession session = request.getSession(false);    //로그인 한 사람만 들어올 수 있다.
+        HttpSession session = getSession(request);    //로그인 한 사람만 들어올 수 있다.
         if (session != null) {
             Member member = (Member) session.getAttribute(SessionConstants.LOGIN_MEMBER);
             if (member != null) {
@@ -89,7 +95,7 @@ public class ReserveController {
             Long id = Long.parseLong(num);
 
 
-            HttpSession session = request.getSession(false);    //현재 로그인한 이용자인지 확인한다.
+            HttpSession session = getSession(request);    //현재 로그인한 이용자인지 확인한다.
             if(session == null) {
                 model.addAttribute("msg", "로그인이 필요합니다");
                 return "login/login";
@@ -153,7 +159,7 @@ public class ReserveController {
             return "redirect:/mypage";
         }
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = getSession(request);
         if(session == null) {
             model.addAttribute("msg", "로그인이 필요합니다");
             return "login/login";
@@ -183,7 +189,7 @@ public class ReserveController {
     @PostMapping("/price")
     public String price_post(@RequestParam(name = "num", required=false) String num, Model model, HttpServletRequest request) {
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = getSession(request);
         if(session == null) {
             model.addAttribute("msg", "로그인이 필요합니다");
             return "login/login";
@@ -215,7 +221,7 @@ public class ReserveController {
     @GetMapping("/clear/{id}")      //퇴실하기 버튼을 눌렀을 때 동작되는 함수이다.
     public String clearOne(@PathVariable("id") String id, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = getSession(request);
         if(session == null) {
             model.addAttribute("msg", "로그인이 필요합니다");        //세션을 확인하여 로그인한적 있는 사용자인지 확인한다.
             return "login/login";
@@ -234,6 +240,57 @@ public class ReserveController {
         sitService.clearOne(member);
 
         return "redirect:/reserve";
+    }
+
+    @GetMapping("/make_timeboard")
+    public String makeTimeTable() {
+            for (int i = 1; i < 8; i++) {
+                reserveService.makeTimeBoard(i);
+            }
+        return "menu/home";
+    }
+
+    @GetMapping("/pre_reserve")
+    public String preReserve(Model model, HttpServletRequest request) {
+        try {
+//            reserveService.reserveTime(memberService.findById(1L), 1, 10, 14);
+
+            List<TimeBoard> oneWeek = reserveService.getOneWeek();
+//            for(int i= 0; i < 7; i++){
+//                Integer[] objects = (Integer[]) oneWeek.get(i).getTimes().keySet().toArray();
+//                model.addAttribute("tb"+ i, objects );
+//            }
+            model.addAttribute("times", IntStream.range(0,24).toArray());
+            OneWeekDto oneWeekDto = OneWeekDto.of(oneWeek);
+            for(TimeBoardDto dto : oneWeekDto.getTimes()) {
+                for(Member member : dto.getMembers()){
+                    if(Objects.isNull(member)){
+                        log.info("비어있음");
+                    }
+                    else{
+                        log.info(member.getUsername());
+                    }
+                }
+//                log.info(String.valueOf(dto.getMembers().size()));
+            }
+            for(TimeBoard t : oneWeek){
+                log.info(String.valueOf(t.getTimes().size()));
+            }
+            log.info(String.valueOf(oneWeek.size()));
+            model.addAttribute("oneWeek", OneWeekDto.of(oneWeek));
+            log.info("pre_reserve 실행");
+
+//            model.addAttribute("table", oneWeek);
+        }catch(Exception e){
+            log.info(e.getMessage());
+            model.addAttribute("table", "no table");
+        }
+
+        return "reserve/reservationseat";
+    }
+
+    private static HttpSession getSession(HttpServletRequest request) {
+        return request.getSession(false);
     }
 
 }
