@@ -1,9 +1,8 @@
 spring:
   datasource:
-#    url: jdbc:mariadb://3.38.33.154:3306/jpastander
-    url: jdbc:mariadb://localhost:3307/stander
-    username: woojin
-    password: 1234
+    url: ${LOCAL_DB}
+    username: ${DB_NAME}
+    password: ${DB_PSWD}
   devtools:
     livereload:
       enabled: true
@@ -11,15 +10,15 @@ spring:
     cache: false
   thymeleaf:
     cache: false
-#  boot:
-#    admin:
-#      mail:
-#        from: ${spring.mail.username}
+  boot:
+    admin:
+      mail:
+        from: ${spring.mail.username}
   mail:
     host: smtp.naver.com
     port: 465
-    username: woojintestid@naver.com
-    password: "!@woojintest"
+    username: ${TESTID}
+    password: ${TESTPASSWORD}
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
