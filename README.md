@@ -1,54 +1,18 @@
 # STANDER
 
-<h1>http://www.stander-mcs.com</h1>
+ - http://www.stander-mcs.com
+ - https://www.stander-mcs.herokuapp.com
 
-git clone https://github.com/zmfpdl64/STANDER.git
+# 기술 스택
 
-#기본 환경 설정
+## BackEnd
 
-JDK 11버전 설정
-
-<h3>환경변수 설정</h3>
-
-JAVA_HOME -> JDK 위치 연결
-
-Path 추가
-
-%JAVA_HOME%\bin\
-
-#사용한 웹 핵심 기술 스택
-
-<h3>
-1. Spring_Boot<br>
-2. JPA<br>
-3. MariaDB<br>
-
-</h3>
-
-#DB 설정
-
-마리아 DB
-
-resources/application.properties 설정
-
-    spring.datasource.driverClassName=org.mariadb.jdbc.Driver
-    spring.datasource.url=jdbc:mariadb://127.0.0.1:3307/stander //stander는 세션의 이름이다.
-    spring.datasource.username=woojin //사용할 관리자의 아이디
-    spring.datasource.password=1234  //사용할 관리자의 비밀번호 
-
-HeidiSQL을 이용한 MariaDB 연결
-
-https://jung-max.github.io/2020/06/24/Web-3_SpringBoot-MariaDb%EC%97%B0%EA%B2%B0/
-
-설명이 잘 되어 있어 이걸 보고 진행해도 좋다.
-<h3>Member Model</h3>
-
-![img_1.png](img_1.png)
-
-<h3>Seat Model</h3>
-
-![img_2.png](img_2.png)
-
+ - Springboot version: '2.6.4'
+ - Spring Data JPA : latest
+ - MariaDB version: latest
+ - Thymeleaf version: latest
+ - Spring Security: version: 5
+ 
 <h1>프로젝트명: STANDER </h1>
 
 <h2> 무인카페 시스템</h2>
@@ -65,27 +29,21 @@ https://jung-max.github.io/2020/06/24/Web-3_SpringBoot-MariaDb%EC%97%B0%EA%B2%B0
 <h3>피지컬 아키텍처<h3>
     
 ![무인스터디카페_피지컬아키텍추](https://github.com/zmfpdl64/StudyCafe-AWS/assets/69797420/aa645ad6-7d6b-4ffc-a91d-2e39c3b91554)
-    
-<h3>기능 블록도</h3>
-
-![image](https://user-images.githubusercontent.com/69797420/170821938-52fd04aa-b46b-43bb-bd98-d792a5be91e8.png)
-
-
-<h3>크게 웹, 앱, IOT 파트로 나뉘어져 있다.</h3>    
   
-<h3>웹, 앱 파트 기능들</h3>
-<h4>
-1. 회원가입
-2. 로그인
-3. 예약하기
-4. 결제하기
-5. 마이페이지</h4>
+  
+<h3>웹, 앱</h3>
+    <br>
+     
+ - 로그인
+ - 회원가입
+ - 예약하기
+ - 결제하기
+ - 마이페이지</h4>
 
 <h3>IOT 파트 기능</h3>
-<h4>
-1. 카메라 모듈을 통한 QR코드 인식
-2. Database에 접근하여 QR Column을 확인하여 서브 모터를 동작시킨다.(출입문)
-</h4>
+
+ - 카메라 QR코드 인식 후 서버와 통신
+ - Servo Motor Operate
 
 ![image](https://user-images.githubusercontent.com/69797420/170821953-00fb6f58-c560-4559-ab70-2354c46ab1e8.png)
 
@@ -98,23 +56,21 @@ https://jung-max.github.io/2020/06/24/Web-3_SpringBoot-MariaDb%EC%97%B0%EA%B2%B0
 
 ![join](https://user-images.githubusercontent.com/69797420/170821105-ac4451cd-bbc1-42ca-a916-48cc8a11fc67.gif)
 
-<h3>회원가입 페이지로 로그인 규격에 맞지 않으면 빨간 글씨의 경고문이 웹페이지에 출력된다.<h3>
+
 <br>
 <h3>2. 로그인</h3>
 
 ![login_notime](https://user-images.githubusercontent.com/69797420/170821109-4c2132aa-c9da-4800-842c-78a116d5306e.gif)
 
-<h3>로그인 기능도 회원가입과 동일한 형식으로 동작한다.</h3>
+
 <br>
 <h3>3. 예약하기</h3>
 
 ![preserve](https://user-images.githubusercontent.com/69797420/170821111-60f42a37-bc4b-45e1-b04c-514631de6b8f.gif)
 
-<h3>예약하기 기능으로 문의하기 시간이 존재한다면 로그인이 되며 시간이 없다면 시간결제 페이지로 이동한다.</h3>
-<br>
-<h3>4. 마이 페이지</h3>
 
-<h3>예약 하기 전 마이 페이지</h3>
+<br>
+<h3>예약 전 마이 페이지</h3>
     
     
 ![GOMCAM 20220510_0154080891](https://user-images.githubusercontent.com/69797420/170823306-47ce36ac-7f7d-49ff-ad16-0e9c3c0dcac8.png)
@@ -135,11 +91,6 @@ https://jung-max.github.io/2020/06/24/Web-3_SpringBoot-MariaDb%EC%97%B0%EA%B2%B0
 
 ![except_reserve](https://user-images.githubusercontent.com/69797420/170821103-3b416e1c-265d-425d-af32-cf8c566bbe96.gif)
 
-<h3>예약할 때 2가지의 예외처리를 진행했다.
-1. 한사람이 두 좌석을 예약했을 때 예외처리<br>
-2. 두사람이 동일한 좌석을 예약했을 때 예외처리<br>
-    </h3>
-<br>
 
 
 
