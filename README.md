@@ -62,11 +62,17 @@ https://jung-max.github.io/2020/06/24/Web-3_SpringBoot-MariaDb%EC%97%B0%EA%B2%B0
 <hr>
 <h2>무인 카페 시스템 원리</h2>
 
+<h3>피지컬 아키텍처<h3>
+    
+![무인스터디카페_피지컬아키텍추](https://github.com/zmfpdl64/StudyCafe-AWS/assets/69797420/aa645ad6-7d6b-4ffc-a91d-2e39c3b91554)
+    
 <h3>기능 블록도</h3>
 
 ![image](https://user-images.githubusercontent.com/69797420/170821938-52fd04aa-b46b-43bb-bd98-d792a5be91e8.png)
 
-<h3>크게 웹, 앱, IOT 파트로 나뉘어져 있다.</h3>
+
+<h3>크게 웹, 앱, IOT 파트로 나뉘어져 있다.</h3>    
+  
 <h3>웹, 앱 파트 기능들</h3>
 <h4>
 1. 회원가입
