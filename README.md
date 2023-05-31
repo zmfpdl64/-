@@ -6,12 +6,17 @@
 # 기술 스택
 
 ## BackEnd
-
+ - Jdk version: 11
  - Springboot version: '2.6.4'
  - Spring Data JPA : latest
  - MariaDB version: latest
  - Thymeleaf version: latest
  - Spring Security: version: 5
+
+## Iot
+ - Python version : 3.7
+ - PigPio
+ - cv2
  
 <h1>프로젝트명: STANDER </h1>
 
@@ -92,8 +97,76 @@
 ![except_reserve](https://user-images.githubusercontent.com/69797420/170821103-3b416e1c-265d-425d-af32-cf8c566bbe96.gif)
 
 
+ 
+## 겪었던 문제점
+ 
+### Python의 싱글 스레드 처리
+ 
+ Python에서 QR코드를 읽고 문을 열어주는 기능을 구현했어야 했습니다.
+ qr코드를 인식하고 subo moter가 동작하는 동안에는 카메라가 이미지를 읽어오지 못했습니다.
+ 그래서 카메라를 읽어오고 subo motor가 동작할 때는 Thread를 생성해 동작하는 동안에도 프로그램이 멈추지 않게 문제를 해결했습니다.
+ 
+ <details>
+  <summary>코드보기/코드접기</summary>
+  
+  ```python
+  
+    import cv2  #이미지 처리를 위한 모듈이다
+    from urllib .request import urlopen  #서버와 통신하기 위한 라이브러리
+    import pigpio  #서브모터를 동작시키기 위한 라이브러리
+    from time import sleep  #시간 관리하는 라이브러리
+    import time
+    import threading   #쓰레드 라이브러리
 
+    start = time .time ()
+    end = time .time ()
+    pi = pigpio .pi()
+    #while True:
+    pi .set_servo_pulsewidth(18 ,0 )  #18번 핀을 이용한다
+    sleep (1 )
+    # initalize the cam
+    cap = cv2 .VideoCapture(0 )    #카메라 모듈을 실시간 스트림으로 동작시킨다.
+    # initialize the cv2 QRCode detector
+    detector = cv2 .QRCodeDetector() #이미지를 디코딩한다
+    while True :
+       start = time .time () 
+       _, img = cap .read()   #이미지를 읽어들인다.
+       # detect and decode
+       data , bbox , _ = detector .detectAndDecode(img )  #qr코드의 스트링을 읽어들인다.
+       # check if there is a QRCode in the image
+       if data and ((start - end )//1 >5 ):        #5초 동안 실행하지 않고 data가 존재할 때 실행된다.
+         end = time .time ()
+         try :
+           response = urlopen (data ).read().decode('utf-8') #qr스트링을 읽어서 url로 이동한다.
+           if response == "ok":   #해당 url로 이동했을 때 ok 신호가 왔을 때 실행된다.
+             t = threading .Thread (target =servo , args =(500 , 1500 ))   #쓰레드를 생성한다. 
+             t .start ()                        #쓰레드를 실행한다.
+             print (response )
+           else :
+             print ("QR코드가 없습니다")
+         except :
+           response = "fail"
+           print ('예외 발생')
 
+       def servo (low , high ):    #문이 열리는 동작을 한다.
+         for i in range (500 , 1500 ):
+           pi .set_servo_pulsewidth(18 , i )
+           sleep (0.0005 )
+         sleep (5 )
+         for i in range (1500 , 500 , -1 ):
+           pi .set_servo_pulsewidth(18 , i )
+           sleep (0.0005 )
 
+         #break
+       # display the result
+       cv2 .imshow("QRCODEscanner", img )   #화면에 카메라 영상이 출력된다.
+       if cv2 .waitKey(1 ) == ord ("q"):  #q를 누르면 프로그램이 종료된다.
+         break
+
+    cap .release()  
+    cv2 .destroyAllWindows() #화면을 종료시킨다.
+ ```
+ 
+ </details>
 
 
