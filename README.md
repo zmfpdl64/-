@@ -99,6 +99,7 @@
 <h3>IOT QR코드 동작</h3>
 
 ![프로젝트](https://github.com/user-attachments/assets/b2b6c4d2-ecef-4f29-ae98-c8606a381d7a)
+
 QR코드를 카메라 모듈이 인식하면 Server에 API를 호출하여 정상적인 QR인지 확인후 출입문이 동작합니다.
  
 ## 겪었던 문제점
