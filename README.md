@@ -1,7 +1,6 @@
 # STANDER
 
- - http://www.stander-mcs.com
- - https://www.stander-mcs.herokuapp.com
+- http://39.115.156.83:8081/
 
 # 기술 스택
 
